@@ -56,8 +56,6 @@ $(function () {
       stopAutoplay();
       $track.empty().append($baseSlides.clone());
       COUNT = $baseSlides.length;
-
-      // determine visible
       var step = computeStep($track);
       var containerW = $container.innerWidth();
       visible = Math.max(1, Math.round(containerW / (step || 1)));

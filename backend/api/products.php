@@ -1,16 +1,15 @@
 <?php
-// backend/api/products.php
-// Basic products API. Supports GET (list or single), POST (create), PUT (update), DELETE (delete)
 
-require __DIR__ . '/../lib/helpers.php';
+if (!defined('BASE_PATH')) {
+  define('BASE_PATH', dirname(__DIR__, 2));
+}
 
-// Load PDO
-$pdo = require __DIR__ . '/../lib/db.php';
+require_once BASE_PATH . '/backend/helpers/helpers.php';
+require_once BASE_PATH . '/backend/db.php';
+require_once BASE_PATH . '/backend/models/Product.php';
 
-// Load model
-require __DIR__ . '/../models/Product.php';
+$pdo = require BASE_PATH . '/backend/db.php';
 
-// Simple router by HTTP method
 $method = $_SERVER['REQUEST_METHOD'];
 
 if ($method === 'GET') {
@@ -52,5 +51,4 @@ if ($method === 'DELETE') {
   jsonResponse(['success' => true]);
 }
 
-// Fallback
 respondError('Method not allowed', 405);

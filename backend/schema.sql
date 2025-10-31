@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `first_name` VARCHAR(120) NOT NULL,
   `last_name` VARCHAR(120) NOT NULL,
   `email` VARCHAR(190) NOT NULL UNIQUE,
-  `password_hash` VARCHAR(255) NOT NULL,
+  `password` VARCHAR(255) NOT NULL,
   `address` VARCHAR(255) NULL,
   `phone` VARCHAR(50) NULL,
   `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,

@@ -44,7 +44,7 @@
 </section>
 
 <!-- Featured Products Section -->
-<section class="bg-white py-20">
+<section class="bg-white pt-20 pb-16">
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
     <!-- Section Header -->
     <div class="mb-16 text-center">
@@ -162,7 +162,7 @@
   </div>
 </section>
 
-<section class="transform py-20 opacity-0 translate-y-10" id="split-screen-section">
+<section class="transform pt-16 pb-20 opacity-0 translate-y-10" id="split-screen-section">
   <div class="mx-auto max-w-7xl">
     <div class="flex flex-col items-center md:flex-row">
       <!-- Left Side - Image -->

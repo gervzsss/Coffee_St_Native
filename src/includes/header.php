@@ -5,6 +5,11 @@ function isActive(string $file): bool
   $current = basename($path ?: 'index.php');
   return strtolower($current) === strtolower($file);
 }
+
+// Get cart count and user info
+$cartCount = getCartCount();
+$isLoggedIn = isLoggedIn();
+$userName = getUserFullName();
 ?>
 
 <nav class="bg-white shadow-sm fixed w-full z-50 border-b border-gray-100">
@@ -87,19 +92,34 @@ function isActive(string $file): bool
           <span
             class="hidden md:inline font-outfit text-[18px] tracking-wide text-gray-700 group-hover:text-[#30442B] transition-all duration-300 ease-out transform group-hover:translate-x-0.5">Cart</span>
           <span
-            class="cart-count absolute -top-2 -right-1 bg-[#30442B] text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center transition-all duration-300 ease-out group-hover:ring-4 group-hover:ring-[#30442B]/20 group-hover:scale-110 group-hover:-translate-y-0.5">0</span>
+            class="cart-count absolute -top-2 -right-1 bg-[#30442B] text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center transition-all duration-300 ease-out group-hover:ring-4 group-hover:ring-[#30442B]/20 group-hover:scale-110 group-hover:-translate-y-0.5"><?php echo $cartCount; ?></span>
         </div>
       </a>
 
-      <!-- Login -->
-      <a id="open-login" href="#login-modal" data-open-login="login"
-        class="hidden md:inline-flex items-center px-8 py-2.5 font-outfit text-[18px] font-medium tracking-wide border-2 border-[#30442B] text-[#30442B] rounded-full overflow-hidden relative transition-all duration-300 ease-out hover:text-white hover:border-[#30442B]/80 hover:shadow-xl group transform hover:-translate-y-0.5">
-        <span
-          class="relative z-10 transform transition-transform duration-300 ease-out group-hover:translate-x-1">Login</span>
-        <div
-          class="absolute inset-0 bg-[#30442B] transform scale-x-0 origin-left transition-transform duration-300 ease-out group-hover:scale-x-100">
+      <!-- Login / User Profile -->
+      <?php if ($isLoggedIn): ?>
+        <div class="hidden md:flex items-center gap-3">
+          <span class="font-outfit text-[16px] text-gray-700">Welcome, <strong
+              class="text-[#30442B]"><?php echo htmlspecialchars($userName); ?></strong></span>
+          <a href="/Coffee_St/backend/api/logout.php"
+            class="inline-flex items-center px-6 py-2.5 font-outfit text-[18px] font-medium tracking-wide border-2 border-red-600 text-red-600 rounded-full overflow-hidden relative transition-all duration-300 ease-out hover:text-white hover:border-red-700 hover:shadow-xl group transform hover:-translate-y-0.5">
+            <span
+              class="relative z-10 transform transition-transform duration-300 ease-out group-hover:translate-x-1">Logout</span>
+            <div
+              class="absolute inset-0 bg-red-600 transform scale-x-0 origin-left transition-transform duration-300 ease-out group-hover:scale-x-100">
+            </div>
+          </a>
         </div>
-      </a>
+      <?php else: ?>
+        <a id="open-login" href="#login-modal" data-open-login="login"
+          class="hidden md:inline-flex items-center px-8 py-2.5 font-outfit text-[18px] font-medium tracking-wide border-2 border-[#30442B] text-[#30442B] rounded-full overflow-hidden relative transition-all duration-300 ease-out hover:text-white hover:border-[#30442B]/80 hover:shadow-xl group transform hover:-translate-y-0.5">
+          <span
+            class="relative z-10 transform transition-transform duration-300 ease-out group-hover:translate-x-1">Login</span>
+          <div
+            class="absolute inset-0 bg-[#30442B] transform scale-x-0 origin-left transition-transform duration-300 ease-out group-hover:scale-x-100">
+          </div>
+        </a>
+      <?php endif; ?>
 
       <!-- Mobile Menu Button -->
       <button id="mobile-menu-button" class="md:hidden text-black hover:text-[#30442B] transition-colors duration-200"

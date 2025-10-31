@@ -1,6 +1,3 @@
-<?php
-// Footer partial for Coffee St.
-?>
 <footer class="bg-[#30442B] text-white">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
     <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
@@ -56,6 +53,6 @@
 
 <script src="/Coffee_St/src/resources/js/toast.js" defer></script>
 <script src="/Coffee_St/src/resources/js/app.js" defer></script>
-<script src="/Coffee_St/src/resources/js/login-validation.js" defer></script>
+<script src="/Coffee_St/src/resources/js/auth.js" defer></script>
 
 <?php include BASE_PATH . '/src/components/auth-modals.php'; ?>

@@ -1,10 +1,8 @@
 <?php
-// backend/models/Product.php
 class Product
 {
   public static function all(PDO $pdo)
   {
-    // Select all columns to allow flexible schema (e.g., category, image_url, cloudinary_public_id)
     $stmt = $pdo->query('SELECT * FROM products ORDER BY id DESC');
     return $stmt->fetchAll();
   }

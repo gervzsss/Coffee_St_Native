@@ -1,6 +1,4 @@
 <?php
-// backend/helpers.php
-
 function jsonResponse($data, $status = 200)
 {
   http_response_code($status);

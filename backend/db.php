@@ -1,18 +1,15 @@
 <?php
-// backend/db.php
-// Create a PDO instance using backend/config.php (copy config.example.php -> config.php)
 
-if (!file_exists(__DIR__ . '/config.php')) {
-  // Friendly error to help setup
+if (!file_exists(__DIR__ . '/configs/config.php')) {
   header('Content-Type: application/json', true, 500);
   echo json_encode([
     'success' => false,
-    'error' => 'Missing backend/lib/config.php. Copy config.example.php to config.php and set your DB credentials.'
+    'error' => 'Missing backend/configs/config.php. Copy config.example.php to config.php and set your DB credentials.'
   ]);
   exit;
 }
 
-$config = require __DIR__ . '/config.php';
+$config = require __DIR__ . '/configs/config.php';
 
 $dsn = sprintf('mysql:host=%s;dbname=%s;charset=%s', $config['db_host'], $config['db_name'], $config['db_charset']);
 $user = $config['db_user'];
@@ -31,5 +28,4 @@ try {
   exit;
 }
 
-// Export $pdo to included scripts
 return $pdo;

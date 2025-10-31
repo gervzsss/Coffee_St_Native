@@ -2,6 +2,9 @@
 if (!defined('BASE_PATH')) {
   define('BASE_PATH', dirname(__DIR__, 2));
 }
+
+require_once BASE_PATH . '/backend/helpers/sessions.php';
+
 $title = 'About - Coffee St.';
 ?>
 
