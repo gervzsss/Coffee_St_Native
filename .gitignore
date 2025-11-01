@@ -7,3 +7,5 @@ dist
 .vscode
 
 config.php
+
+public/output.css
