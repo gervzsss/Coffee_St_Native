@@ -65,7 +65,7 @@ $(function () {
     // Check if user is logged in
     if (!isUserLoggedIn()) {
       // Show login modal for guests
-      showToast("Please login to add items to cart", "info");
+      showToast("Please login to add items to cart", { type: "warning" });
       showLoginModal();
       return;
     }
