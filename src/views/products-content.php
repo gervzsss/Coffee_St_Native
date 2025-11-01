@@ -189,57 +189,60 @@
         $products = Product::all($pdo);
         ?>
         <?php if (empty($products)): ?>
-            <div
-              class="col-span-full flex flex-col items-center justify-center rounded-2xl border border-dashed border-[#30442B]/30 bg-white/70 py-20 text-center">
-              <p class="text-xl font-semibold text-[#30442B]">Products coming soon.</p>
-              <p class="mt-2 text-sm text-neutral-500">Please check back later while we brew something special.</p>
-            </div>
+          <div
+            class="col-span-full flex flex-col items-center justify-center rounded-2xl border border-dashed border-[#30442B]/30 bg-white/70 py-20 text-center">
+            <p class="text-xl font-semibold text-[#30442B]">Products coming soon.</p>
+            <p class="mt-2 text-sm text-neutral-500">Please check back later while we brew something special.</p>
+          </div>
         <?php else: ?>
-            <?php foreach ($products as $product): ?>
-                <?php
-                $category = $extractCategory($product);
-                $img = $imageUrlFor($product);
-                ?>
-                <div
-                  class="product-card group flex h-full flex-col overflow-hidden rounded-2xl bg-white shadow-sm transition-all duration-300 hover:shadow-lg"
-                  data-category="<?php echo htmlspecialchars($category); ?>"
-                  data-id="<?php echo (int) ($product['id'] ?? 0); ?>">
-                  <div class="relative h-72 overflow-hidden bg-[#30442B]">
-                    <div class="absolute inset-0 flex items-center justify-center p-8">
-                      <img src="<?php echo htmlspecialchars($img); ?>"
-                        alt="<?php echo htmlspecialchars($product['name'] ?? ''); ?>"
-                        class="max-h-48 w-auto transform drop-shadow-xl transition-transform duration-500 group-hover:scale-110"
-                        loading="lazy" decoding="async" />
-                    </div>
-                    <div
-                      class="absolute inset-0 bg-linear-to-r from-[#30442B]/80 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                    </div>
-                  </div>
-                  <div class="flex flex-1 flex-col bg-white p-6">
-                    <div class="mb-2">
-                      <h3
-                        class="font-playfair text-xl font-bold text-gray-800 transition-colors duration-300 group-hover:text-[#30442B]">
-                        <?php echo htmlspecialchars($product['name'] ?? ''); ?>
-                      </h3>
-                    </div>
-                    <p class="mb-4 line-clamp-2 text-sm leading-relaxed text-gray-600">
-                      <?php echo htmlspecialchars($product['description'] ?? ''); ?>
-                    </p>
-                    <div class="mt-auto flex items-center justify-between pt-2">
-                      <span
-                        class="text-xl font-bold text-[#30442B]">₱<?php echo number_format((float) ($product['price'] ?? 0), 2); ?></span>
-                      <button
-                        class="add-to-cart flex cursor-pointer items-center gap-2 rounded-full bg-[#30442B] px-4 py-2 text-sm font-medium text-white transition-colors duration-300 hover:bg-[#405939]">
-                        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6">
-                          </path>
-                        </svg>
-                        Add to Cart
-                      </button>
-                    </div>
-                  </div>
+          <?php foreach ($products as $product): ?>
+            <?php
+            $category = $extractCategory($product);
+            $img = $imageUrlFor($product);
+            ?>
+            <div
+              class="product-card group flex h-full flex-col overflow-hidden rounded-2xl bg-white shadow-sm transition-all duration-300 hover:shadow-lg"
+              data-category="<?php echo htmlspecialchars($category); ?>"
+              data-id="<?php echo (int) ($product['id'] ?? 0); ?>">
+              <div class="relative h-72 overflow-hidden bg-[#30442B]">
+                <div class="absolute inset-0 flex items-center justify-center p-8">
+                  <img src="<?php echo htmlspecialchars($img); ?>"
+                    alt="<?php echo htmlspecialchars($product['name'] ?? ''); ?>"
+                    class="max-h-48 w-auto transform drop-shadow-xl transition-transform duration-500 group-hover:scale-110"
+                    loading="lazy" decoding="async" />
                 </div>
-            <?php endforeach; ?>
+                <div
+                  class="absolute inset-0 bg-linear-to-r from-[#30442B]/80 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                </div>
+              </div>
+              <div class="flex flex-1 flex-col bg-white p-6">
+                <div class="mb-2">
+                  <h3
+                    class="font-playfair text-xl font-bold text-gray-800 transition-colors duration-300 group-hover:text-[#30442B]">
+                    <?php echo htmlspecialchars($product['name'] ?? ''); ?>
+                  </h3>
+                </div>
+                <p class="mb-4 line-clamp-2 text-sm leading-relaxed text-gray-600">
+                  <?php echo htmlspecialchars($product['description'] ?? ''); ?>
+                </p>
+                <div class="mt-auto flex items-center justify-between pt-2">
+                  <span
+                    class="text-xl font-bold text-[#30442B]">₱<?php echo number_format((float) ($product['price'] ?? 0), 2); ?></span>
+                  <button
+                    class="add-to-cart flex cursor-pointer items-center gap-2 rounded-full bg-[#30442B] px-4 py-2 text-sm font-medium text-white transition-colors duration-300 hover:bg-[#405939]"
+                    data-product-id="<?php echo htmlspecialchars($product['id'] ?? ''); ?>"
+                    data-price="<?php echo htmlspecialchars($product['price'] ?? '0'); ?>">
+                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z">
+                      </path>
+                    </svg>
+                    Add to Cart
+                  </button>
+                </div>
+              </div>
+            </div>
+          <?php endforeach; ?>
         <?php endif; ?>
       </div>
     </div>

@@ -51,8 +51,20 @@
   </div>
 </footer>
 
+<!-- Set user login state for JavaScript -->
+<script>
+  window.user = <?php echo json_encode([
+    'isLoggedIn' => isLoggedIn(),
+    'id' => isLoggedIn() ? getUserId() : null,
+    'email' => isLoggedIn() ? getUserEmail() : null,
+    'first_name' => isLoggedIn() ? getUserFirstName() : null,
+    'full_name' => isLoggedIn() ? getUserFullName() : null
+  ]); ?>;
+</script>
+
 <script src="/Coffee_St/src/resources/js/toast.js" defer></script>
 <script src="/Coffee_St/src/resources/js/app.js" defer></script>
 <script src="/Coffee_St/src/resources/js/auth.js" defer></script>
+<script src="/Coffee_St/src/resources/js/cart-handler.js" defer></script>
 
 <?php include BASE_PATH . '/src/components/auth-modals.php'; ?>

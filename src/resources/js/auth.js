@@ -147,6 +147,15 @@ $(document).ready(function () {
     });
   }
 
+  // Expose openModal globally for cart-handler.js
+  window.openLoginModal = function () {
+    openModal('#login-modal');
+  };
+
+  window.openSignupModal = function () {
+    openModal('#signup-modal');
+  };
+
   function closeModals() {
     const $overlay = $('#modal-overlay');
     $('.modal-panel:visible').each(function () {
@@ -277,15 +286,27 @@ $(document).ready(function () {
 
     // Submit login
     $.ajax({
-      url: '/Coffee_St/backend/api/login.php',
+      url: '/Coffee_St/backend/api/auth.php',
       method: 'POST',
       contentType: 'application/json',
-      data: JSON.stringify({ email, password }),
+      data: JSON.stringify({ action: 'login', email, password }),
       success: function (response) {
         if (response.success) {
           const userName = response.user && response.user.first_name
             ? response.user.first_name
             : 'back';
+
+          // Set global user object
+          window.user = {
+            isLoggedIn: true,
+            ...response.user
+          };
+
+          // Trigger login event for cart handler
+          $(document).trigger('user:loggedIn', {
+            user: response.user,
+            cart_count: response.cart_count || 0
+          });
 
           if (typeof window.showToast === 'function') {
             window.showToast(`Welcome back, ${userName}!`, { type: 'success', duration: 3000 });
@@ -332,15 +353,27 @@ $(document).ready(function () {
 
     // Submit registration
     $.ajax({
-      url: '/Coffee_St/backend/api/register.php',
+      url: '/Coffee_St/backend/api/auth.php',
       method: 'POST',
       contentType: 'application/json',
-      data: JSON.stringify(formData),
+      data: JSON.stringify({ action: 'register', ...formData }),
       success: function (response) {
         if (response.success) {
           const userName = response.user && response.user.first_name
             ? response.user.first_name
             : 'there';
+
+          // Set global user object
+          window.user = {
+            isLoggedIn: true,
+            ...response.user
+          };
+
+          // Trigger login event for cart handler
+          $(document).trigger('user:loggedIn', {
+            user: response.user,
+            cart_count: response.cart_count || 0
+          });
 
           if (typeof window.showToast === 'function') {
             window.showToast(`Welcome to Coffee St., ${userName}!`, { type: 'success', duration: 3000 });
@@ -358,6 +391,38 @@ $(document).ready(function () {
         } else {
           setFieldError($('#reg-pass-confirm'), errorMsg);
         }
+      }
+    });
+  });
+
+  // ============================================
+  // LOGOUT HANDLER
+  // ============================================
+
+  $(document).on('click', '#logout-btn', function (e) {
+    e.preventDefault();
+
+    $.ajax({
+      url: '/Coffee_St/backend/api/auth.php',
+      method: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify({ action: 'logout' }),
+      success: function (response) {
+        if (response.success) {
+          // Clear global user object
+          window.user = { isLoggedIn: false };
+
+          showToast('Logged out successfully', { type: 'success', duration: 2000 });
+
+          // Redirect to home after short delay
+          setTimeout(() => {
+            window.location.href = '/Coffee_St/public/index.php';
+          }, 1000);
+        }
+      },
+      error: function () {
+        // Even if error, still redirect (session might be cleared)
+        window.location.href = '/Coffee_St/public/index.php';
       }
     });
   });

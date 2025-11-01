@@ -1,169 +1,94 @@
-<?php
-$cartSummary = getCartSummary();
-$cartItems = $cartSummary['items'];
-$isEmpty = isCartEmpty();
-?>
-
 <h1 class="text-3xl md:text-4xl font-bold text-[#30442B]">Your Cart</h1>
-<p class="mt-4 text-neutral-700">
-  <?php if ($isEmpty): ?>
-    Your cart is currently empty. Start shopping to add items!
-  <?php else: ?>
-    You have <?php echo $cartSummary['item_count']; ?> item(s) in your cart.
-  <?php endif; ?>
-</p>
 
-<section class="mt-8 grid gap-6">
-  <?php if ($isEmpty): ?>
-    <div class="rounded-lg border bg-white p-6 shadow-sm">
-      <p class="text-neutral-600">No items in your cart yet.</p>
+<!-- Login Required Message (hidden by default, shown by JS if not logged in) -->
+<div id="login-required-message" class="mt-8 hidden">
+  <div class="rounded-lg border bg-white p-12 shadow-sm text-center">
+    <svg class="w-24 h-24 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+    </svg>
+    <h2 class="text-2xl font-bold text-gray-800 mb-2">Please Login to View Cart</h2>
+    <p class="text-gray-600 mb-6">You need to be logged in to add items and view your cart.</p>
+    <button id="cart-login-btn"
+      class="bg-[#30442B] text-white px-6 py-3 cursor-pointer rounded-lg hover:bg-[#405939] transition-colors">
+      Login or Sign Up
+    </button>
+  </div>
+</div>
+
+<!-- Empty Cart Message (hidden by default, shown by JS if cart is empty) -->
+<div id="empty-cart-message" class="mt-8 hidden">
+  <div class="rounded-lg border bg-white p-12 shadow-sm text-center">
+    <svg class="w-24 h-24 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+    </svg>
+    <h2 class="text-2xl font-bold text-gray-800 mb-2">Your cart is empty</h2>
+    <p class="text-gray-600 mb-6">Start shopping to add items to your cart!</p>
+    <a href="/Coffee_St/public/pages/products.php"
+      class="inline-flex items-center px-6 py-3 bg-[#30442B] text-white rounded-lg hover:bg-[#405939] transition-colors">
+      Browse Products
+    </a>
+  </div>
+</div>
+
+<!-- Cart Items Container (populated by JS with data-* attributes) -->
+<div id="cart-items-container" class="mt-8 hidden space-y-4"></div>
+
+<!-- Cart Item Template (hidden, cloned by JS for each item) -->
+<template id="cart-item-template">
+  <div class="cart-item flex items-center gap-4 border-b pb-4" data-product-id="">
+    <img src="" alt="" class="cart-item-image w-20 h-20 object-cover rounded">
+    <div class="flex-1">
+      <h3 class="cart-item-name font-bold text-lg"></h3>
+      <p class="cart-item-variant text-sm text-gray-600 hidden"></p>
+      <p class="cart-item-price text-[#30442B] font-semibold"></p>
     </div>
-  <?php else: ?>
-    <!-- Cart Items -->
-    <div class="rounded-lg border bg-white shadow-sm overflow-hidden">
-      <?php foreach ($cartItems as $itemKey => $item): ?>
-        <div class="p-6 border-b last:border-b-0 flex items-center gap-6">
-          <!-- Product Image -->
-          <?php if (!empty($item['image'])): ?>
-            <img src="<?php echo htmlspecialchars($item['image']); ?>" alt="<?php echo htmlspecialchars($item['name']); ?>"
-              class="w-20 h-20 object-cover rounded-lg">
-          <?php else: ?>
-            <div class="w-20 h-20 bg-gray-200 rounded-lg flex items-center justify-center">
-              <span class="text-gray-400 text-xs">No image</span>
-            </div>
-          <?php endif; ?>
-
-          <!-- Product Details -->
-          <div class="flex-1">
-            <h3 class="font-semibold text-lg text-[#30442B]"><?php echo htmlspecialchars($item['name']); ?></h3>
-            <p class="text-sm text-neutral-600">Size: <?php echo htmlspecialchars($item['size']); ?></p>
-            <p class="text-sm font-medium text-neutral-800 mt-1">₱<?php echo number_format($item['price'], 2); ?></p>
-          </div>
-
-          <!-- Quantity Controls -->
-          <div class="flex items-center gap-3">
-            <button onclick="updateQuantity('<?php echo $itemKey; ?>', <?php echo $item['quantity'] - 1; ?>)"
-              class="w-8 h-8 rounded-full border-2 border-[#30442B] text-[#30442B] hover:bg-[#30442B] hover:text-white transition">
-              -
-            </button>
-            <span class="w-12 text-center font-semibold"><?php echo $item['quantity']; ?></span>
-            <button onclick="updateQuantity('<?php echo $itemKey; ?>', <?php echo $item['quantity'] + 1; ?>)"
-              class="w-8 h-8 rounded-full border-2 border-[#30442B] text-[#30442B] hover:bg-[#30442B] hover:text-white transition">
-              +
-            </button>
-          </div>
-
-          <!-- Subtotal -->
-          <div class="w-24 text-right">
-            <p class="font-bold text-lg text-[#30442B]">₱<?php echo number_format($item['price'] * $item['quantity'], 2); ?>
-            </p>
-          </div>
-
-          <!-- Remove Button -->
-          <button onclick="removeItem('<?php echo $itemKey; ?>')" class="text-red-600 hover:text-red-800 transition p-2">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-            </svg>
-          </button>
-        </div>
-      <?php endforeach; ?>
+    <div class="flex items-center gap-2">
+      <button class="cart-qty-decrease bg-gray-200 hover:bg-gray-300 w-8 h-8 rounded" data-product-id="">-</button>
+      <input type="number" class="cart-qty-input w-16 text-center border rounded" value="1" min="1" data-product-id=""
+        readonly>
+      <button class="cart-qty-increase bg-gray-200 hover:bg-gray-300 w-8 h-8 rounded" data-product-id="">+</button>
     </div>
+    <div class="text-right">
+      <p class="cart-item-total font-bold text-lg"></p>
+      <button class="cart-item-remove text-red-600 hover:text-red-800 text-sm" data-product-id="">Remove</button>
+    </div>
+  </div>
+</template>
 
-    <!-- Cart Summary -->
-    <div class="rounded-lg border bg-white p-6 shadow-sm">
-      <h2 class="text-xl font-bold text-[#30442B] mb-4">Order Summary</h2>
-      <div class="space-y-2">
-        <div class="flex justify-between text-neutral-700">
-          <span>Subtotal:</span>
-          <span>₱<?php echo number_format($cartSummary['subtotal'], 2); ?></span>
-        </div>
-        <div class="flex justify-between text-neutral-700">
-          <span>Tax (8%):</span>
-          <span>₱<?php echo number_format($cartSummary['tax'], 2); ?></span>
-        </div>
-        <div class="border-t pt-2 mt-2 flex justify-between font-bold text-lg text-[#30442B]">
-          <span>Total:</span>
-          <span>₱<?php echo number_format($cartSummary['total'], 2); ?></span>
-        </div>
+<!-- Cart Summary (populated by JS) -->
+<div id="cart-summary" class="mt-8 hidden">
+  <div class="bg-gray-50 p-6 rounded-lg">
+    <h3 class="text-xl font-bold mb-4">Order Summary</h3>
+    <div class="space-y-2">
+      <div class="flex justify-between">
+        <span>Subtotal:</span>
+        <span id="cart-subtotal">₱0.00</span>
+      </div>
+      <div class="flex justify-between">
+        <span>Tax (<span id="cart-tax-rate">0</span>%):</span>
+        <span id="cart-tax">₱0.00</span>
+      </div>
+      <div class="flex justify-between text-xl font-bold border-t pt-2">
+        <span>Total:</span>
+        <span id="cart-total" class="text-[#30442B]">₱0.00</span>
       </div>
     </div>
-  <?php endif; ?>
-
-  <!-- Action Buttons -->
-  <div class="flex items-center gap-4">
-    <a href="/Coffee_St/public/pages/products.php"
-      class="inline-flex items-center px-5 py-2.5 border border-[#30442B] text-[#30442B] rounded-full font-medium hover:text-white hover:bg-[#30442B] transition">
-      Continue Shopping
-    </a>
-    <?php if (!$isEmpty): ?>
-      <button onclick="clearCart()"
-        class="inline-flex items-center px-5 py-2.5 border border-red-600 text-red-600 rounded-full font-medium hover:text-white hover:bg-red-600 transition">
-        Clear Cart
-      </button>
-      <button
-        class="inline-flex items-center px-5 py-2.5 bg-[#30442B] text-white rounded-full font-medium hover:bg-[#3d5a38] transition">
-        Proceed to Checkout
-      </button>
-    <?php else: ?>
-      <button disabled
-        class="inline-flex items-center px-5 py-2.5 bg-gray-300 text-gray-600 rounded-full font-medium cursor-not-allowed">
-        Checkout (cart is empty)
-      </button>
-    <?php endif; ?>
+    <button
+      class="cart-checkout-btn w-full bg-[#30442B] text-white py-3 rounded-lg mt-4 hover:bg-[#405939] transition-colors">
+      Proceed to Checkout
+    </button>
   </div>
-</section>
+</div>
 
-<script>
-  function updateQuantity(itemKey, quantity) {
-    fetch('/Coffee_St/backend/api/cart-update.php', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ action: 'update', item_key: itemKey, quantity: quantity })
-    })
-      .then(response => response.json())
-      .then(data => {
-        if (data.success) {
-          location.reload();
-        } else {
-          alert('Failed to update cart');
-        }
-      });
-  }
+<!-- Action Buttons -->
+<div class="flex items-center gap-4 mt-8">
+  <a href="/Coffee_St/public/pages/products.php"
+    class="inline-flex items-center px-5 py-2.5 border border-[#30442B] text-[#30442B] rounded-full font-medium hover:text-white hover:bg-[#30442B] transition">
+    Continue Shopping
+  </a>
+</div>
 
-  function removeItem(itemKey) {
-    if (confirm('Remove this item from cart?')) {
-      fetch('/Coffee_St/backend/api/cart-update.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'remove', item_key: itemKey })
-      })
-        .then(response => response.json())
-        .then(data => {
-          if (data.success) {
-            location.reload();
-          } else {
-            alert('Failed to remove item');
-          }
-        });
-    }
-  }
-
-  function clearCart() {
-    if (confirm('Clear all items from cart?')) {
-      fetch('/Coffee_St/backend/api/cart-update.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'clear' })
-      })
-        .then(response => response.json())
-        .then(data => {
-          if (data.success) {
-            location.reload();
-          } else {
-            alert('Failed to clear cart');
-          }
-        });
-    }
-  }
-</script>
+<!-- Load cart page handler -->
+<script src="/Coffee_St/src/resources/js/cart-page.js" defer></script>

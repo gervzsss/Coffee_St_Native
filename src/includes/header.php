@@ -101,14 +101,14 @@ $userName = getUserFullName();
         <div class="hidden md:flex items-center gap-3">
           <span class="font-outfit text-[16px] text-gray-700">Welcome, <strong
               class="text-[#30442B]"><?php echo htmlspecialchars($userName); ?></strong></span>
-          <a href="/Coffee_St/backend/api/logout.php"
-            class="inline-flex items-center px-6 py-2.5 font-outfit text-[18px] font-medium tracking-wide border-2 border-red-600 text-red-600 rounded-full overflow-hidden relative transition-all duration-300 ease-out hover:text-white hover:border-red-700 hover:shadow-xl group transform hover:-translate-y-0.5">
+          <button id="logout-btn"
+            class="inline-flex items-center px-6 py-2.5 cursor-pointer font-outfit text-[18px] font-medium tracking-wide border-2 border-red-600 text-red-600 rounded-full overflow-hidden relative transition-all duration-300 ease-out hover:text-white hover:border-red-700 hover:shadow-xl group transform hover:-translate-y-0.5">
             <span
               class="relative z-10 transform transition-transform duration-300 ease-out group-hover:translate-x-1">Logout</span>
             <div
               class="absolute inset-0 bg-red-600 transform scale-x-0 origin-left transition-transform duration-300 ease-out group-hover:scale-x-100">
             </div>
-          </a>
+          </button>
         </div>
       <?php else: ?>
         <a id="open-login" href="#login-modal" data-open-login="login"
