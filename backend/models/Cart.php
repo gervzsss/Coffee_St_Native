@@ -1,11 +1,6 @@
 <?php
-
 class Cart
 {
-  /**
-   * Get or create user's active cart
-   * Returns cart ID
-   */
   public static function getActiveCart($pdo, $userId)
   {
     $stmt = $pdo->prepare("
@@ -29,12 +24,8 @@ class Cart
     return $pdo->lastInsertId();
   }
 
-  /**
-   * Add item to cart or update quantity if exists
-   */
   public static function addItem($pdo, $cartId, $productId, $quantity, $unitPrice, $variantId = null, $variantName = null, $priceDelta = 0.00)
   {
-    // Check if item already exists in cart
     $stmt = $pdo->prepare("
       SELECT id, quantity FROM cart_items 
       WHERE cart_id = ? AND product_id = ?
@@ -43,7 +34,6 @@ class Cart
     $existing = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($existing) {
-      // Update quantity
       $newQuantity = $existing['quantity'] + $quantity;
       $stmt = $pdo->prepare("
         UPDATE cart_items 
@@ -54,7 +44,6 @@ class Cart
       return $existing['id'];
     }
 
-    // Insert new item
     $stmt = $pdo->prepare("
       INSERT INTO cart_items 
       (cart_id, product_id, variant_id, variant_name, quantity, unit_price, price_delta) 
@@ -72,9 +61,7 @@ class Cart
     return $pdo->lastInsertId();
   }
 
-  /**
-   * Update item quantity in cart
-   */
+
   public static function updateItemQuantity($pdo, $cartId, $productId, $quantity)
   {
     if ($quantity <= 0) {
@@ -89,9 +76,6 @@ class Cart
     return $stmt->execute([$quantity, $cartId, $productId]);
   }
 
-  /**
-   * Remove item from cart
-   */
   public static function removeItem($pdo, $cartId, $productId)
   {
     $stmt = $pdo->prepare("
@@ -101,9 +85,29 @@ class Cart
     return $stmt->execute([$cartId, $productId]);
   }
 
-  /**
-   * Get all items in cart with product details
-   */
+  public static function removeItems($pdo, $cartId, array $productIds)
+  {
+    $productIds = array_values(array_filter(array_map('intval', $productIds), function ($id) {
+      return $id > 0;
+    }));
+
+    if (empty($productIds)) {
+      return false;
+    }
+
+    $placeholders = implode(',', array_fill(0, count($productIds), '?'));
+    $params = array_merge([$cartId], $productIds);
+
+    $stmt = $pdo->prepare(
+      "
+      DELETE FROM cart_items
+      WHERE cart_id = ? AND product_id IN ($placeholders)
+    "
+    );
+
+    return $stmt->execute($params);
+  }
+
   public static function getItems($pdo, $cartId)
   {
     $stmt = $pdo->prepare("
@@ -128,9 +132,6 @@ class Cart
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
   }
 
-  /**
-   * Get cart totals (subtotal, tax, total)
-   */
   public static function getCartTotals($pdo, $cartId, $taxRate = 0.08)
   {
     $stmt = $pdo->prepare("
@@ -154,9 +155,6 @@ class Cart
     ];
   }
 
-  /**
-   * Get cart item count
-   */
   public static function getItemCount($pdo, $cartId)
   {
     $stmt = $pdo->prepare("
@@ -169,18 +167,12 @@ class Cart
     return (int) ($result['total_items'] ?? 0);
   }
 
-  /**
-   * Clear all items from cart
-   */
   public static function clearCart($pdo, $cartId)
   {
     $stmt = $pdo->prepare("DELETE FROM cart_items WHERE cart_id = ?");
     return $stmt->execute([$cartId]);
   }
 
-  /**
-   * Mark cart as converted (after order creation)
-   */
   public static function markAsConverted($pdo, $cartId)
   {
     $stmt = $pdo->prepare("
@@ -191,17 +183,11 @@ class Cart
     return $stmt->execute([$cartId]);
   }
 
-  /**
-   * Check if cart is empty
-   */
   public static function isEmpty($pdo, $cartId)
   {
     return self::getItemCount($pdo, $cartId) === 0;
   }
 
-  /**
-   * Get full cart summary (items + totals)
-   */
   public static function getCartSummary($pdo, $cartId)
   {
     $items = self::getItems($pdo, $cartId);

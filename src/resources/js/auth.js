@@ -1,10 +1,6 @@
 $(document).ready(function () {
   let formSubmitted = false;
 
-  // ============================================
-  // VALIDATION PATTERNS & HELPERS
-  // ============================================
-
   const PATTERNS = {
     name: /^[A-Za-z\s.\-']+$/,
     email: /^[A-Za-z0-9._\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}$/,
@@ -23,12 +19,7 @@ $(document).ready(function () {
     }
   }
 
-  // ============================================
-  // VALIDATION FUNCTIONS
-  // ============================================
-
   const validators = {
-    // Login validators
     loginEmail: function () {
       const $f = $('#login-email');
       const v = $.trim($f.val());
@@ -46,7 +37,6 @@ $(document).ready(function () {
       return true;
     },
 
-    // Signup validators
     firstName: function () {
       const $f = $('#reg-first');
       const v = $.trim($f.val());
@@ -92,7 +82,7 @@ $(document).ready(function () {
       if (!v) return (setFieldError($f, 'Password required.'), false);
       if (v.length < 6) return (setFieldError($f, 'Minimum 6 characters.'), false);
       setFieldError($f, null);
-      validators.passwordConfirm(); // Re-validate confirmation
+      validators.passwordConfirm();
       return true;
     },
     passwordConfirm: function () {
@@ -105,10 +95,6 @@ $(document).ready(function () {
       return true;
     }
   };
-
-  // ============================================
-  // MODAL MANAGEMENT
-  // ============================================
 
   function animateIn($modal) {
     $modal.show();
@@ -147,7 +133,6 @@ $(document).ready(function () {
     });
   }
 
-  // Expose openModal globally for cart-handler.js
   window.openLoginModal = function () {
     openModal('#login-modal');
   };
@@ -172,10 +157,6 @@ $(document).ready(function () {
       $overlay.find('input').removeClass('border-red-400 focus:border-red-400 focus:ring-red-400');
     }, 200);
   }
-
-  // ============================================
-  // MODAL EVENT HANDLERS
-  // ============================================
 
   $(document).on('click', '#open-login, [data-open-login="login"]', function (e) {
     e.preventDefault();
@@ -210,10 +191,6 @@ $(document).ready(function () {
     if (e.key === 'Escape') closeModals();
   });
 
-  // ============================================
-  // PASSWORD TOGGLE
-  // ============================================
-
   $(document).on('click', '.password-toggle', function (e) {
     e.preventDefault();
     const $btn = $(this);
@@ -235,10 +212,6 @@ $(document).ready(function () {
     }
   });
 
-  // ============================================
-  // REAL-TIME VALIDATION
-  // ============================================
-
   $(document).on('input', '#login-email', validators.loginEmail);
   $(document).on('input', '#login-password', validators.loginPassword);
   $(document).on('input', '#reg-first', validators.firstName);
@@ -249,7 +222,6 @@ $(document).ready(function () {
   $(document).on('input', '#reg-pass', validators.password);
   $(document).on('input', '#reg-pass-confirm', validators.passwordConfirm);
 
-  // Blur validation (only after form submission)
   $(document).on('blur', 'input', function () {
     if (!formSubmitted) return;
     const id = $(this).attr('id');
@@ -267,10 +239,6 @@ $(document).ready(function () {
     if (validatorMap[id]) validatorMap[id]();
   });
 
-  // ============================================
-  // FORM SUBMISSION - LOGIN
-  // ============================================
-
   $('#login-form').on('submit', function (e) {
     e.preventDefault();
     formSubmitted = true;
@@ -278,13 +246,11 @@ $(document).ready(function () {
     const email = $('#login-email').val().trim();
     const password = $('#login-password').val();
 
-    // Validate all fields
     const isEmailValid = validators.loginEmail();
     const isPasswordValid = validators.loginPassword();
 
     if (!isEmailValid || !isPasswordValid) return;
 
-    // Disable button and show spinner
     const $btn = $('#login-form button[type="submit"]');
     const originalText = $btn.html();
     $btn.prop('disabled', true).removeClass('cursor-pointer').addClass('cursor-default').html(`
@@ -294,7 +260,6 @@ $(document).ready(function () {
       </svg>
     `);
 
-    // Submit login
     $.ajax({
       url: '/Coffee_St/backend/api/auth.php',
       method: 'POST',
@@ -306,13 +271,11 @@ $(document).ready(function () {
             ? response.user.first_name
             : 'back';
 
-          // Set global user object
           window.user = {
             isLoggedIn: true,
             ...response.user
           };
 
-          // Trigger login event for cart handler
           $(document).trigger('user:loggedIn', {
             user: response.user,
             cart_count: response.cart_count || 0
@@ -329,21 +292,15 @@ $(document).ready(function () {
         const response = xhr.responseJSON || {};
         const errorMsg = response.error || 'Login failed. Please try again.';
         setFieldError($('#login-password'), errorMsg);
-        // Re-enable button and restore cursor
         $btn.prop('disabled', false).removeClass('cursor-default').addClass('cursor-pointer').html(originalText);
       }
     });
   });
 
-  // ============================================
-  // FORM SUBMISSION - SIGNUP
-  // ============================================
-
   $('#signup-form').on('submit', function (e) {
     e.preventDefault();
     formSubmitted = true;
 
-    // Validate all fields
     const isValid = validators.firstName() &&
       validators.lastName() &&
       validators.address() &&
@@ -363,7 +320,6 @@ $(document).ready(function () {
       password: $('#reg-pass').val()
     };
 
-    // Disable button and show spinner
     const $btn = $('#signup-form button[type="submit"]');
     const originalText = $btn.html();
     $btn.prop('disabled', true).removeClass('cursor-pointer').addClass('cursor-default').html(`
@@ -373,7 +329,6 @@ $(document).ready(function () {
       </svg>
     `);
 
-    // Submit registration
     $.ajax({
       url: '/Coffee_St/backend/api/auth.php',
       method: 'POST',
@@ -385,13 +340,11 @@ $(document).ready(function () {
             ? response.user.first_name
             : 'there';
 
-          // Set global user object
           window.user = {
             isLoggedIn: true,
             ...response.user
           };
 
-          // Trigger login event for cart handler
           $(document).trigger('user:loggedIn', {
             user: response.user,
             cart_count: response.cart_count || 0
@@ -408,22 +361,16 @@ $(document).ready(function () {
         const response = xhr.responseJSON || {};
         const errorMsg = response.error || 'Registration failed. Please try again.';
 
-        // Check if error is related to email (case-insensitive)
         if (errorMsg.toLowerCase().includes('email')) {
           setFieldError($('#reg-email'), errorMsg);
         } else {
           setFieldError($('#reg-pass-confirm'), errorMsg);
         }
 
-        // Re-enable button and restore cursor
         $btn.prop('disabled', false).removeClass('cursor-default').addClass('cursor-pointer').html(originalText);
       }
     });
   });
-
-  // ============================================
-  // LOGOUT HANDLER
-  // ============================================
 
   $(document).on('click', '#logout-btn', function (e) {
     e.preventDefault();
@@ -435,19 +382,16 @@ $(document).ready(function () {
       data: JSON.stringify({ action: 'logout' }),
       success: function (response) {
         if (response.success) {
-          // Clear global user object
           window.user = { isLoggedIn: false };
 
           showToast('Logged out successfully', { type: 'success', duration: 2000 });
 
-          // Redirect to home after short delay
           setTimeout(() => {
             window.location.href = '/Coffee_St/public/index.php';
           }, 1000);
         }
       },
       error: function () {
-        // Even if error, still redirect (session might be cleared)
         window.location.href = '/Coffee_St/public/index.php';
       }
     });

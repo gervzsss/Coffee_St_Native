@@ -1,9 +1,4 @@
 <?php
-/**
- * Unified Cart API
- * Handles all cart operations (GET, POST, PUT, DELETE)
- */
-
 if (!defined('BASE_PATH')) {
   define('BASE_PATH', dirname(__DIR__, 2));
 }
@@ -15,7 +10,6 @@ require_once BASE_PATH . '/backend/models/Cart.php';
 
 header('Content-Type: application/json');
 
-// Authentication required for all cart operations
 if (!isLoggedIn()) {
   respondError('Authentication required. Please login to access cart.', 401);
 }
@@ -27,9 +21,7 @@ $cartId = Cart::getActiveCart($pdo, $userId);
 
 try {
   switch ($method) {
-    // ========================================
-    // GET - Retrieve cart
-    // ========================================
+
     case 'GET':
       $cartSummary = Cart::getCartSummary($pdo, $cartId);
 
@@ -39,9 +31,6 @@ try {
       ]);
       break;
 
-    // ========================================
-    // POST - Add item to cart
-    // ========================================
     case 'POST':
       $input = getJsonInput();
 
@@ -75,9 +64,6 @@ try {
       ], 201);
       break;
 
-    // ========================================
-    // PUT/PATCH - Update item quantity
-    // ========================================
     case 'PUT':
     case 'PATCH':
       $input = getJsonInput();
@@ -104,30 +90,46 @@ try {
       ]);
       break;
 
-    // ========================================
-    // DELETE - Remove item from cart
-    // ========================================
     case 'DELETE':
+      $input = getJsonInput();
       $productId = isset($_GET['product_id']) ? (int) $_GET['product_id'] : null;
+      $productIds = [];
 
-      if (!$productId) {
+      if ($productId) {
+        $productIds[] = $productId;
+      }
+
+      if (isset($input['product_id'])) {
+        $productIds[] = (int) $input['product_id'];
+      }
+
+      if (isset($input['product_ids']) && is_array($input['product_ids'])) {
+        $productIds = array_merge($productIds, $input['product_ids']);
+      }
+
+      $productIds = array_values(array_unique(array_map('intval', $productIds)));
+
+      if (empty($productIds)) {
         respondError('Product ID is required');
       }
 
-      Cart::removeItem($pdo, $cartId, $productId);
+      if (count($productIds) === 1) {
+        Cart::removeItem($pdo, $cartId, $productIds[0]);
+        $message = 'Item removed from cart';
+      } else {
+        Cart::removeItems($pdo, $cartId, $productIds);
+        $message = 'Selected items removed from cart';
+      }
 
       $cartSummary = Cart::getCartSummary($pdo, $cartId);
 
       jsonResponse([
         'success' => true,
-        'message' => 'Item removed from cart',
+        'message' => $message,
         'cart' => $cartSummary
       ]);
       break;
 
-    // ========================================
-    // Invalid method
-    // ========================================
     default:
       respondError('Method not allowed', 405);
   }

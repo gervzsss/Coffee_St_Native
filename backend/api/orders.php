@@ -23,7 +23,6 @@ try {
   $pdo = require BASE_PATH . '/backend/db.php';
   $userId = getUserId();
 
-  // Get specific order by ID
   if (isset($_GET['id'])) {
     $orderId = (int) $_GET['id'];
     $order = Order::getOrderDetails($pdo, $orderId, $userId);
@@ -39,7 +38,6 @@ try {
     return;
   }
 
-  // Get all user orders with pagination
   $limit = isset($_GET['limit']) ? (int) $_GET['limit'] : 50;
   $offset = isset($_GET['offset']) ? (int) $_GET['offset'] : 0;
 

@@ -1,17 +1,11 @@
 <?php
-
 class Order
 {
-  /**
-   * Create order from cart
-   * Converts active cart to order and marks cart as converted
-   */
   public static function create($pdo, $userId, $cartId, $deliveryFee = 0.00)
   {
     try {
       $pdo->beginTransaction();
 
-      // Get cart totals
       $cartTotals = Cart::getCartTotals($pdo, $cartId);
       $cartItems = Cart::getItems($pdo, $cartId);
 
@@ -19,7 +13,6 @@ class Order
         throw new Exception('Cannot create order from empty cart');
       }
 
-      // Create order record
       $stmt = $pdo->prepare("
         INSERT INTO orders 
         (user_id, status, subtotal, delivery_fee, tax_rate, tax_amount, tax, total) 
@@ -40,7 +33,6 @@ class Order
 
       $orderId = $pdo->lastInsertId();
 
-      // Create order items from cart items
       $stmt = $pdo->prepare("
         INSERT INTO order_items 
         (order_id, product_id, variant_id, variant_name, price_delta, product_name, unit_price, quantity, line_total) 
@@ -62,7 +54,6 @@ class Order
         ]);
       }
 
-      // Mark cart as converted
       Cart::markAsConverted($pdo, $cartId);
 
       $pdo->commit();
@@ -72,10 +63,6 @@ class Order
       throw $e;
     }
   }
-
-  /**
-   * Get all orders for a user
-   */
   public static function getUserOrders($pdo, $userId, $limit = 50, $offset = 0)
   {
     $stmt = $pdo->prepare("
@@ -97,13 +84,8 @@ class Order
     $stmt->execute([$userId, $limit, $offset]);
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
   }
-
-  /**
-   * Get single order with all items
-   */
   public static function getOrderDetails($pdo, $orderId, $userId = null)
   {
-    // Get order
     $sql = "
       SELECT 
         o.id,
@@ -141,7 +123,6 @@ class Order
       return null;
     }
 
-    // Get order items
     $stmt = $pdo->prepare("
       SELECT 
         oi.id,
@@ -166,9 +147,6 @@ class Order
     return $order;
   }
 
-  /**
-   * Update order status
-   */
   public static function updateStatus($pdo, $orderId, $status)
   {
     $validStatuses = ['pending', 'paid', 'cancelled'];
@@ -184,9 +162,6 @@ class Order
     return $stmt->execute([$status, $orderId]);
   }
 
-  /**
-   * Cancel order
-   */
   public static function cancel($pdo, $orderId, $userId = null)
   {
     $sql = "
@@ -205,9 +180,6 @@ class Order
     return $stmt->execute([$orderId]);
   }
 
-  /**
-   * Get order count for user
-   */
   public static function getUserOrderCount($pdo, $userId)
   {
     $stmt = $pdo->prepare("
@@ -220,9 +192,6 @@ class Order
     return (int) $result['total'];
   }
 
-  /**
-   * Find order by ID
-   */
   public static function find($pdo, $orderId)
   {
     return self::getOrderDetails($pdo, $orderId);

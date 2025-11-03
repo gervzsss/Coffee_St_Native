@@ -34,7 +34,6 @@ if ($method === 'POST') {
 }
 
 if ($method === 'PUT' || $method === 'PATCH') {
-  // Expect ?id=1
   $id = isset($_GET['id']) ? $_GET['id'] : null;
   if (!$id)
     respondError('Missing id', 400);

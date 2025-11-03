@@ -27,9 +27,6 @@ if (!isset($_SESSION['user'])) {
   ];
 }
 
-// ============================================
-// CART FUNCTIONS
-// ============================================
 function addToCart($productId, $name, $price, $quantity = 1, $image = null, $size = 'Medium')
 {
   $itemKey = $productId . '_' . strtolower($size);
@@ -126,10 +123,6 @@ function getCartSummary()
     'total' => getCartTotal()
   ];
 }
-
-// ============================================
-// USER FUNCTIONS
-// ============================================
 
 function loginUser($userId, $email, $firstName, $lastName)
 {

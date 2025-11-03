@@ -29,15 +29,12 @@ try {
   $userId = getUserId();
   $cartId = Cart::getActiveCart($pdo, $userId);
 
-  // Check if cart is empty
   if (Cart::isEmpty($pdo, $cartId)) {
     respondError('Cannot checkout with empty cart', 400);
   }
 
-  // Create order from cart
   $orderId = Order::create($pdo, $userId, $cartId, $deliveryFee);
 
-  // Get order details
   $order = Order::getOrderDetails($pdo, $orderId, $userId);
 
   jsonResponse([

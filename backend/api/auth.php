@@ -1,8 +1,4 @@
 <?php
-/**
- * Unified Auth API
- * Handles login, register, and logout operations
- */
 
 if (!defined('BASE_PATH')) {
   define('BASE_PATH', dirname(__DIR__, 2));
@@ -18,14 +14,12 @@ header('Content-Type: application/json');
 
 $method = $_SERVER['REQUEST_METHOD'];
 
-// Only POST allowed for auth operations
 if ($method !== 'POST') {
   respondError('Method not allowed', 405);
 }
 
 $input = getJsonInput();
 
-// Determine action from input
 if (!isset($input['action'])) {
   respondError('Action is required (login, register, or logout)');
 }
@@ -36,9 +30,6 @@ try {
   $pdo = require BASE_PATH . '/backend/db.php';
 
   switch ($action) {
-    // ========================================
-    // LOGIN
-    // ========================================
     case 'login':
       if (!isset($input['email'], $input['password'])) {
         respondError('Email and password are required');
@@ -64,7 +55,6 @@ try {
         $user['last_name']
       );
 
-      // Get cart count (no migration needed since guests can't add items)
       $cartId = Cart::getActiveCart($pdo, $user['id']);
       $cartCount = Cart::getItemCount($pdo, $cartId);
 
@@ -82,9 +72,6 @@ try {
       ]);
       break;
 
-    // ========================================
-    // REGISTER
-    // ========================================
     case 'register':
       $required = ['email', 'password', 'first_name', 'last_name', 'phone', 'address'];
       foreach ($required as $field) {
@@ -123,7 +110,6 @@ try {
 
       loginUser($userId, $email, $firstName, $lastName);
 
-      // Get cart count (new user will have empty cart)
       $cartId = Cart::getActiveCart($pdo, $userId);
       $cartCount = Cart::getItemCount($pdo, $cartId);
 
@@ -141,9 +127,6 @@ try {
       ], 201);
       break;
 
-    // ========================================
-    // LOGOUT
-    // ========================================
     case 'logout':
       logoutUser();
 
@@ -153,9 +136,6 @@ try {
       ]);
       break;
 
-    // ========================================
-    // Invalid action
-    // ========================================
     default:
       respondError('Invalid action. Use: login, register, or logout');
   }

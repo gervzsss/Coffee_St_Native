@@ -32,63 +32,114 @@
   </div>
 </div>
 
-<!-- Cart Items Container (populated by JS with data-* attributes) -->
-<div id="cart-items-container" class="mt-8 hidden space-y-4"></div>
+<!-- Cart Wrapper (visible when cart has items) -->
+<div id="cart-wrapper" class="hidden">
+  <div class="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-3 items-start">
+    <!-- Items Column -->
+    <section class="lg:col-span-2 space-y-4">
+      <div
+        class="rounded-lg border bg-white p-4 shadow-sm flex flex-wrap items-center justify-between gap-3 text-neutral-700">
+        <div class="flex flex-col gap-1">
+          <label class="inline-flex items-center gap-2 cursor-pointer text-sm text-[#30442B] font-medium">
+            <input type="checkbox" id="cart-select-all"
+              class="h-4 w-4 rounded border-neutral-300 text-[#30442B] focus:ring-[#30442B]">
+            <span id="cart-select-all-label">Select All Items (0)</span>
+          </label>
+          <p id="cart-items-count-label" class="text-xs text-neutral-500">0 items in your cart</p>
+        </div>
+        <button type="button" id="cart-remove-selected"
+          class="inline-flex items-center gap-2 rounded border border-red-500 px-3 py-1.5 text-sm font-medium text-red-600 opacity-60 cursor-not-allowed"
+          disabled>
+          <span aria-hidden="true">🗑</span>
+          <span>Remove Selected</span>
+        </button>
+      </div>
+
+      <!-- Cart Items Container -->
+      <div id="cart-items-container" class="space-y-4"></div>
+
+      <div class="flex items-center gap-4 pt-2">
+        <a href="/Coffee_St/public/pages/products.php"
+          class="inline-flex items-center px-5 py-2.5 border border-[#30442B] text-[#30442B] rounded-full font-medium hover:text-white hover:bg-[#30442B] transition">
+          Continue Shopping
+        </a>
+      </div>
+    </section>
+
+    <!-- Summary Column -->
+    <aside class="lg:col-span-1">
+      <div id="cart-summary" class="rounded-lg border bg-white p-6 shadow-sm sticky top-28 space-y-4">
+        <div>
+          <h2 class="text-lg font-semibold text-[#30442B]">Order Summary</h2>
+          <p id="cart-summary-label" class="text-sm text-neutral-500">No items selected.</p>
+        </div>
+        <ul id="cart-summary-items" class="space-y-1 text-sm text-neutral-700"></ul>
+        <dl class="space-y-2 text-sm text-neutral-700">
+          <div class="flex justify-between py-2 border-b border-neutral-100">
+            <dt>Subtotal</dt>
+            <dd>₱<span id="cart-subtotal">0.00</span></dd>
+          </div>
+          <div class="flex justify-between py-2 border-b border-neutral-100">
+            <dt>Tax (<span id="cart-tax-rate">0</span>%)</dt>
+            <dd>₱<span id="cart-tax">0.00</span></dd>
+          </div>
+          <div class="flex justify-between items-center text-lg font-semibold text-[#30442B] pt-2">
+            <dt>Total</dt>
+            <dd>₱<span id="cart-total">0.00</span></dd>
+          </div>
+        </dl>
+        <button
+          class="cart-checkout-btn w-full bg-[#30442B] cursor-pointer text-white py-3 rounded-lg hover:bg-[#405939] transition-colors">
+          Proceed to Checkout
+        </button>
+        <p class="text-xs text-neutral-500">Estimated delivery: 25-35 minutes</p>
+      </div>
+    </aside>
+  </div>
+</div>
 
 <!-- Cart Item Template (hidden, cloned by JS for each item) -->
 <template id="cart-item-template">
-  <div class="cart-item flex items-center gap-4 border-b pb-4" data-product-id="">
-    <img src="" alt="" class="cart-item-image w-20 h-20 object-cover rounded">
-    <div class="flex-1">
-      <h3 class="cart-item-name font-bold text-lg"></h3>
-      <p class="cart-item-variant text-sm text-gray-600 hidden"></p>
-      <p class="cart-item-price text-[#30442B] font-semibold"></p>
-    </div>
-    <div class="flex items-center gap-2">
-      <button class="cart-qty-decrease bg-gray-200 hover:bg-gray-300 w-8 h-8 rounded" data-product-id="">-</button>
-      <input type="number" class="cart-qty-input w-16 text-center border rounded" value="1" min="1" data-product-id=""
-        readonly>
-      <button class="cart-qty-increase bg-gray-200 hover:bg-gray-300 w-8 h-8 rounded" data-product-id="">+</button>
-    </div>
-    <div class="text-right">
-      <p class="cart-item-total font-bold text-lg"></p>
-      <button class="cart-item-remove text-red-600 hover:text-red-800 text-sm" data-product-id="">Remove</button>
+  <div class="cart-item rounded-lg border bg-white p-4 shadow-sm" data-product-id="">
+    <div class="flex items-center gap-4">
+      <label class="flex h-5 w-5 items-center justify-center">
+        <input type="checkbox"
+          class="cart-item-select h-4 w-4 rounded border-neutral-300 cursor-pointer text-[#30442B] focus:ring-[#30442B]"
+          data-product-id="">
+      </label>
+      <img src="" alt="" class="cart-item-image h-20 w-20 rounded object-cover">
+      <div class="flex-1">
+        <div class="flex flex-wrap items-start justify-between gap-2">
+          <div>
+            <h3 class="cart-item-name font-semibold text-lg text-[#30442B]"></h3>
+            <p class="cart-item-variant text-sm text-neutral-500 hidden"></p>
+            <p class="cart-item-price text-sm text-neutral-500"></p>
+          </div>
+          <span class="cart-item-total text-lg font-semibold text-[#30442B]"></span>
+        </div>
+        <div class="mt-4 flex flex-wrap items-center gap-3">
+          <div class="flex items-center gap-2">
+            <button
+              class="cart-qty-decrease h-8 w-8 rounded-full border border-neutral-200 flex items-center justify-center cursor-pointer text-lg leading-none text-[#30442B] hover:border-[#30442B]"
+              data-product-id="">-</button>
+            <input type="number"
+              class="cart-qty-input w-14 text-center border border-neutral-200 rounded-lg text-neutral-700" value="1"
+              min="1" data-product-id="" readonly>
+            <button
+              class="cart-qty-increase h-8 w-8 rounded-full border border-neutral-200 flex items-center justify-center cursor-pointer text-lg leading-none text-[#30442B] hover:border-[#30442B]"
+              data-product-id="">+</button>
+          </div>
+          <button
+            class="cart-item-remove text-sm cursor-pointer text-red-600 hover:text-red-700 flex items-center gap-1"
+            data-product-id="">
+            <span aria-hidden="true">🗑</span>
+            Remove
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
-
-<!-- Cart Summary (populated by JS) -->
-<div id="cart-summary" class="mt-8 hidden">
-  <div class="bg-gray-50 p-6 rounded-lg">
-    <h3 class="text-xl font-bold mb-4">Order Summary</h3>
-    <div class="space-y-2">
-      <div class="flex justify-between">
-        <span>Subtotal:</span>
-        <span id="cart-subtotal">₱0.00</span>
-      </div>
-      <div class="flex justify-between">
-        <span>Tax (<span id="cart-tax-rate">0</span>%):</span>
-        <span id="cart-tax">₱0.00</span>
-      </div>
-      <div class="flex justify-between text-xl font-bold border-t pt-2">
-        <span>Total:</span>
-        <span id="cart-total" class="text-[#30442B]">₱0.00</span>
-      </div>
-    </div>
-    <button
-      class="cart-checkout-btn w-full bg-[#30442B] text-white py-3 rounded-lg mt-4 hover:bg-[#405939] transition-colors">
-      Proceed to Checkout
-    </button>
-  </div>
-</div>
-
-<!-- Action Buttons -->
-<div class="flex items-center gap-4 mt-8">
-  <a href="/Coffee_St/public/pages/products.php"
-    class="inline-flex items-center px-5 py-2.5 border border-[#30442B] text-[#30442B] rounded-full font-medium hover:text-white hover:bg-[#30442B] transition">
-    Continue Shopping
-  </a>
-</div>
 
 <!-- Load cart page handler -->
 <script src="/Coffee_St/src/resources/js/cart-page.js" defer></script>

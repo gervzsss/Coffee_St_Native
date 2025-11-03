@@ -1,7 +1,3 @@
-<?php
-// Products Page Main Content Partial
-?>
-
 <!-- Header Section with Search -->
 <div class="w-full bg-[#30442B] py-6">
   <div class="container mx-auto px-4">
@@ -126,19 +122,15 @@
     <div class="flex-1">
       <div class="grid products-equal-rows grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8" id="products-grid">
         <?php
-        // Fetch products from backend (server-side render)
         $ROOT = dirname(__DIR__, 2);
         $pdo = require $ROOT . '/backend/db.php';
         require_once $ROOT . '/backend/models/Product.php';
         require_once $ROOT . '/backend/configs/cloudinary.php';
-
-        // Helpers
         $slug = function ($text) {
           $s = strtolower(trim((string) $text));
           $s = preg_replace('/[^a-z0-9]+/i', '-', $s);
           return trim($s, '-');
         };
-        // Map known categories to consistent slugs; fallback to slugified text
         $categorySlugFor = function ($raw) use ($slug) {
           $key = strtolower(trim((string) $raw));
           $map = [
@@ -159,7 +151,6 @@
             return $map[$key];
           return $slug($raw);
         };
-        // Try multiple possible keys for category (case/alias tolerant)
         $extractCategory = function (array $row) use ($categorySlugFor) {
           $candidates = ['category', 'Category', 'CATEGORY', 'category_slug', 'CategorySlug', 'categorySlug', 'type', 'Type', 'TYPE', 'product_category', 'ProductCategory', 'productCategory'];
           foreach ($candidates as $k) {
@@ -167,7 +158,6 @@
               return $categorySlugFor($row[$k]);
             }
           }
-          // If nothing found, default to 'all'
           return 'all';
         };
         $imageUrlFor = function ($row) {

@@ -1,25 +1,16 @@
-/**
- * Database Cart Handler
- * Handles add-to-cart functionality with authentication check
- */
-
 $(function () {
-  // Check if user is logged in (from window.user set by PHP)
   function isUserLoggedIn() {
     return window.user && window.user.isLoggedIn === true;
   }
 
-  // Show login modal
   function showLoginModal() {
     if (typeof window.openLoginModal === 'function') {
       window.openLoginModal();
     } else {
-      // Fallback
       console.error('Login modal function not available');
     }
   }
 
-  // Add item to database cart
   function addToCartDB(productData) {
     return $.ajax({
       url: "/Coffee_St/backend/api/cart.php",
@@ -29,7 +20,6 @@ $(function () {
     });
   }
 
-  // Get cart from database
   function getCartDB() {
     return $.ajax({
       url: "/Coffee_St/backend/api/cart.php",
@@ -37,7 +27,6 @@ $(function () {
     });
   }
 
-  // Update cart count badge in header
   function updateCartBadge(count) {
     const $badge = $(".cart-count, .cart-badge");
     if ($badge.length) {
@@ -48,29 +37,23 @@ $(function () {
     }
   }
 
-  // Expose updateCartBadge globally so cart-page.js can use it
   window.updateCartBadge = updateCartBadge;
 
-  // Handle Add to Cart button click
   $(document).on("click", ".add-to-cart", function (e) {
     e.preventDefault();
     const $btn = $(this);
 
-    // Visual feedback
     $btn.addClass("scale-95");
     setTimeout(() => {
       $btn.removeClass("scale-95");
     }, 150);
 
-    // Check if user is logged in
     if (!isUserLoggedIn()) {
-      // Show login modal for guests
       showToast("Please login to add items to cart", { type: "warning" });
       showLoginModal();
       return;
     }
 
-    // Get product data from button or card
     const $card = $btn.closest(".product-card, .featured-card");
     const productData = {
       product_id: parseInt($btn.data("product-id") || $card.data("product-id")),
@@ -79,14 +62,12 @@ $(function () {
       variant_name: $btn.data("size") || "Medium",
     };
 
-    // Validate product data
     if (!productData.product_id || !productData.unit_price) {
       showToast("Invalid product data", "error");
       console.error("Missing product data:", productData);
       return;
     }
 
-    // Add to cart via API
     $btn.prop("disabled", true).addClass("opacity-50");
 
     addToCartDB(productData)
@@ -94,12 +75,10 @@ $(function () {
         if (response.success) {
           showToast("Item added to cart", "success");
 
-          // Update cart badge
           if (response.cart && response.cart.item_count) {
             updateCartBadge(response.cart.item_count);
           }
 
-          // Animate button
           $btn.html(
             '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Added'
           );
@@ -131,7 +110,6 @@ $(function () {
       });
   });
 
-  // Load cart count on page load for logged-in users (skip if on cart page)
   const isCartPage = window.location.pathname.includes('/cart.php');
 
   if (isUserLoggedIn() && !isCartPage) {
@@ -142,12 +120,10 @@ $(function () {
         }
       })
       .fail(() => {
-        // Silent fail - don't show error for cart count
         console.warn("Failed to load cart count");
       });
   }
 
-  // Update cart count after login/register success
   $(document).on("user:loggedIn", function (e, data) {
     if (data.cart_count !== undefined) {
       updateCartBadge(data.cart_count);
