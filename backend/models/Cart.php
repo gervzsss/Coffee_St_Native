@@ -61,7 +61,6 @@ class Cart
     return $pdo->lastInsertId();
   }
 
-
   public static function updateItemQuantity($pdo, $cartId, $productId, $quantity)
   {
     if ($quantity <= 0) {
