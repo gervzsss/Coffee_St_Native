@@ -1,7 +1,7 @@
 <!-- Hero Section -->
 <section class="relative isolate pt-24">
   <div class="absolute inset-0">
-    <img src="/Coffee_St/public/assets/aboutus_head.png" alt="Coffee roasting process"
+    <img src="/Coffee_St_Native/public/assets/aboutus_head.png" alt="Coffee roasting process"
       class="h-full w-full object-cover" />
   </div>
   <div class="absolute inset-0 bg-[#1a2319]/75 mix-blend-multiply"></div>
@@ -32,7 +32,7 @@
         <div
           class="absolute inset-0 rotate-3 transform rounded-3xl bg-[#30442B] transition-transform duration-300 group-hover:rotate-6">
         </div>
-        <img src="/Coffee_St/public\assets\journeyimage.png" alt="Fresh baked goods"
+        <img src="/Coffee_St_Native/public\assets\journeyimage.png" alt="Fresh baked goods"
           class="relative z-10 h-full w-full rounded-3xl object-cover shadow-2xl transition-all duration-300 group-hover:translate-x-2 group-hover:-translate-y-2" />
       </div>
       <!-- Content Side -->
@@ -81,7 +81,7 @@
           class="flex min-h-[500px] flex-1 flex-col rounded-2xl bg-white shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
           <div class="flex flex-1 items-center justify-center p-6">
             <div class="aspect-square overflow-hidden rounded-xl">
-              <img src="/Coffee_St/public/assets/sustainability.png" alt="Sustainability"
+              <img src="/Coffee_St_Native/public/assets/sustainability.png" alt="Sustainability"
                 class="h-full w-full transform object-cover transition-transform duration-300 hover:scale-105" />
             </div>
           </div>
@@ -101,7 +101,7 @@
           class="flex min-h-[500px] flex-1 flex-col rounded-2xl bg-white shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
           <div class="flex flex-1 items-center justify-center p-6">
             <div class="aspect-square overflow-hidden rounded-xl">
-              <img src="/Coffee_St/public/assets/bakeddaily.png" alt="Fresh Quality"
+              <img src="/Coffee_St_Native/public/assets/bakeddaily.png" alt="Fresh Quality"
                 class="h-full w-full transform object-cover transition-transform duration-300 hover:scale-105" />
             </div>
           </div>
@@ -121,7 +121,7 @@
           class="flex min-h-[500px] flex-1 flex-col rounded-2xl bg-white shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
           <div class="flex flex-1 items-center justify-center p-6">
             <div class="aspect-square overflow-hidden rounded-xl">
-              <img src="/Coffee_St/public/assets/farmercoffeebean.png" alt="Ethical Sourcing"
+              <img src="/Coffee_St_Native/public/assets/farmercoffeebean.png" alt="Ethical Sourcing"
                 class="h-full w-full transform object-cover transition-transform duration-300 hover:scale-105" />
             </div>
           </div>
@@ -141,7 +141,7 @@
           class="flex min-h-[500px] flex-1 flex-col rounded-2xl bg-white shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
           <div class="flex flex-1 items-center justify-center p-6">
             <div class="aspect-square overflow-hidden rounded-xl">
-              <img src="/Coffee_St/public/assets/coffeebeans.png" alt="Premium Beans"
+              <img src="/Coffee_St_Native/public/assets/coffeebeans.png" alt="Premium Beans"
                 class="h-full w-full transform object-cover transition-transform duration-300 hover:scale-105" />
             </div>
           </div>
@@ -174,7 +174,7 @@
         <div
           class="flex-1 rounded-2xl bg-white p-6 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
           <div class="mb-6 aspect-square overflow-hidden rounded-xl bg-neutral-100">
-            <img src="/Coffee_St/public/assets/baristas.png" alt="Stephany"
+            <img src="/Coffee_St_Native/public/assets/baristas.png" alt="Stephany"
               class="h-full w-full transform object-cover transition-transform duration-300 hover:scale-105" />
           </div>
           <h3 class="font-outfit mb-2 text-center text-xl font-semibold text-[#30442B]">
@@ -189,7 +189,7 @@
         <div
           class="flex-1 rounded-2xl bg-white p-6 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
           <div class="mb-6 aspect-square overflow-hidden rounded-xl bg-neutral-100">
-            <img src="/Coffee_St/public/assets/baristas.png" alt="Gabriel"
+            <img src="/Coffee_St_Native/public/assets/baristas.png" alt="Gabriel"
               class="h-full w-full transform object-cover transition-transform duration-300 hover:scale-105" />
           </div>
           <h3 class="font-outfit mb-2 text-center text-xl font-semibold text-[#30442B]">
@@ -204,7 +204,7 @@
         <div
           class="flex-1 rounded-2xl bg-white p-6 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
           <div class="mb-6 aspect-square overflow-hidden rounded-xl bg-neutral-100">
-            <img src="/Coffee_St/public/assets/baristas.png" alt="Christian"
+            <img src="/Coffee_St_Native/public/assets/baristas.png" alt="Christian"
               class="h-full w-full transform object-cover transition-transform duration-300 hover:scale-105" />
           </div>
           <h3 class="font-outfit mb-2 text-center text-xl font-semibold text-[#30442B]">
@@ -219,7 +219,7 @@
         <div
           class="flex-1 rounded-2xl bg-white p-6 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
           <div class="mb-6 aspect-square overflow-hidden rounded-xl bg-neutral-100">
-            <img src="/Coffee_St/public/assets/baristas.png" alt="Gervy"
+            <img src="/Coffee_St_Native/public/assets/baristas.png" alt="Gervy"
               class="h-full w-full transform object-cover transition-transform duration-300 hover:scale-105" />
           </div>
           <h3 class="font-outfit mb-2 text-center text-xl font-semibold text-[#30442B]">

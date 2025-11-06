@@ -8,7 +8,7 @@ if (session_status() === PHP_SESSION_NONE) {
     ini_set('session.cookie_secure', '1');
   }
 
-  session_name('COFFEE_ST_SESSION');
+  session_name('Coffee_St_Native_SESSION');
   session_start();
 }
 
@@ -194,7 +194,7 @@ function getUserFirstName()
   return $_SESSION['user']['first_name'] ?? 'Guest';
 }
 
-function requireAuth($redirectTo = '/Coffee_St/public/index.php')
+function requireAuth($redirectTo = '/Coffee_St_Native/public/index.php')
 {
   if (!isLoggedIn()) {
     header("Location: $redirectTo");

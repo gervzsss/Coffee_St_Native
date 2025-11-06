@@ -13,7 +13,7 @@ $(function () {
 
   function addToCartDB(productData) {
     return $.ajax({
-      url: "/Coffee_St/backend/api/cart.php",
+      url: "/Coffee_St_Native/backend/api/cart.php",
       method: "POST",
       contentType: "application/json",
       data: JSON.stringify(productData),
@@ -22,7 +22,7 @@ $(function () {
 
   function getCartDB() {
     return $.ajax({
-      url: "/Coffee_St/backend/api/cart.php",
+      url: "/Coffee_St_Native/backend/api/cart.php",
       method: "GET",
     });
   }

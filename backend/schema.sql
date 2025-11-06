@@ -1,5 +1,5 @@
-CREATE DATABASE IF NOT EXISTS `coffee_st` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE `coffee_st`;
+CREATE DATABASE IF NOT EXISTS `old_coffee_st` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE `old_coffee_st`;
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `thread_messages`;

@@ -15,7 +15,6 @@ class Cart
       return $cart['id'];
     }
 
-    // Create new active cart
     $stmt = $pdo->prepare("
       INSERT INTO carts (user_id, status) 
       VALUES (?, 'active')

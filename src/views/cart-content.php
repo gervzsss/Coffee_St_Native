@@ -25,7 +25,7 @@
     </svg>
     <h2 class="text-2xl font-bold text-gray-800 mb-2">Your cart is empty</h2>
     <p class="text-gray-600 mb-6">Start shopping to add items to your cart!</p>
-    <a href="/Coffee_St/public/pages/products.php"
+    <a href="/Coffee_St_Native/public/pages/products.php"
       class="inline-flex items-center px-6 py-3 bg-[#30442B] text-white rounded-lg hover:bg-[#405939] transition-colors">
       Browse Products
     </a>
@@ -59,7 +59,7 @@
       <div id="cart-items-container" class="space-y-4"></div>
 
       <div class="flex items-center gap-4 pt-2">
-        <a href="/Coffee_St/public/pages/products.php"
+        <a href="/Coffee_St_Native/public/pages/products.php"
           class="inline-flex items-center px-5 py-2.5 border border-[#30442B] text-[#30442B] rounded-full font-medium hover:text-white hover:bg-[#30442B] transition">
           Continue Shopping
         </a>
@@ -142,4 +142,4 @@
 </template>
 
 <!-- Load cart page handler -->
-<script src="/Coffee_St/src/resources/js/cart-page.js" defer></script>
+<script src="/Coffee_St_Native/src/resources/js/cart-page.js" defer></script>

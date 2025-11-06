@@ -144,7 +144,7 @@ $(function () {
     }
 
     $.ajax({
-      url: "/Coffee_St/backend/api/cart.php",
+      url: "/Coffee_St_Native/backend/api/cart.php",
       method: "GET",
       success: function (response) {
         if (response.success && response.cart) {
@@ -243,7 +243,7 @@ $(function () {
 
   function updateQuantity(productId, newQuantity) {
     $.ajax({
-      url: "/Coffee_St/backend/api/cart.php",
+      url: "/Coffee_St_Native/backend/api/cart.php",
       method: "PUT",
       contentType: "application/json",
       data: JSON.stringify({
@@ -268,7 +268,7 @@ $(function () {
   function removeItem(productId) {
     selectedItems.delete(String(productId));
     $.ajax({
-      url: `/Coffee_St/backend/api/cart.php?product_id=${productId}`,
+      url: `/Coffee_St_Native/backend/api/cart.php?product_id=${productId}`,
       method: "DELETE",
       success: function (response) {
         if (response.success) {
@@ -314,7 +314,7 @@ $(function () {
     const ids = Array.from(selectedItems).map((id) => parseInt(id, 10)).filter((id) => !Number.isNaN(id));
 
     $.ajax({
-      url: "/Coffee_St/backend/api/cart.php",
+      url: "/Coffee_St_Native/backend/api/cart.php",
       method: "DELETE",
       contentType: "application/json",
       data: JSON.stringify({ product_ids: ids }),
@@ -385,7 +385,7 @@ $(function () {
     showToast("Checkout functionality coming soon!", { type: "info" });
 
     // Uncomment when ready to implement checkout:
-    // window.location.href = '/Coffee_St/public/pages/checkout.php';
+    // window.location.href = '/Coffee_St_Native/public/pages/checkout.php';
   });
 
   loadCart();

@@ -11,13 +11,13 @@
       <div class="col-span-1">
         <h4 class="font-bold mb-4">Quick Links</h4>
         <ul class="space-y-2">
-          <li><a href="/Coffee_St/public/index.php"
+          <li><a href="/Coffee_St_Native/public/index.php"
               class="text-gray-300 hover:text-white transition-colors duration-200">Home</a></li>
-          <li><a href="/Coffee_St/public/pages/products.php"
+          <li><a href="/Coffee_St_Native/public/pages/products.php"
               class="text-gray-300 hover:text-white transition-colors duration-200">Menu</a></li>
-          <li><a href="/Coffee_St/public/pages/about.php"
+          <li><a href="/Coffee_St_Native/public/pages/about.php"
               class="text-gray-300 hover:text-white transition-colors duration-200">About</a></li>
-          <li><a href="/Coffee_St/public/pages/contact.php"
+          <li><a href="/Coffee_St_Native/public/pages/contact.php"
               class="text-gray-300 hover:text-white transition-colors duration-200">Contact</a></li>
         </ul>
       </div>
@@ -62,9 +62,9 @@
   ]); ?>;
 </script>
 
-<script src="/Coffee_St/src/resources/js/toast.js" defer></script>
-<script src="/Coffee_St/src/resources/js/app.js" defer></script>
-<script src="/Coffee_St/src/resources/js/auth.js" defer></script>
-<script src="/Coffee_St/src/resources/js/cart-handler.js" defer></script>
+<script src="/Coffee_St_Native/src/resources/js/toast.js" defer></script>
+<script src="/Coffee_St_Native/src/resources/js/app.js" defer></script>
+<script src="/Coffee_St_Native/src/resources/js/auth.js" defer></script>
+<script src="/Coffee_St_Native/src/resources/js/cart-handler.js" defer></script>
 
 <?php include BASE_PATH . '/src/components/auth-modals.php'; ?>

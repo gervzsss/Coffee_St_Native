@@ -1,6 +1,6 @@
 <section class="relative isolate pt-24">
   <div class="absolute inset-0">
-    <img src="/Coffee_St/public/assets/contact_header.png" alt="Barista pouring coffee"
+    <img src="/Coffee_St_Native/public/assets/contact_header.png" alt="Barista pouring coffee"
       class="h-full w-full object-cover" />
   </div>
   <div class="absolute inset-0 bg-[#1a2319]/80 mix-blend-multiply"></div>

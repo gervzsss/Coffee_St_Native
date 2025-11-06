@@ -22,7 +22,7 @@ $title = "Coffee St. - Your Premium Coffee Destination";
 
   <?php require_once BASE_PATH . "/src/includes/footer.php"; ?>
 
-  <script src="/Coffee_St/src/resources/js/home.js" defer></script>
+  <script src="/Coffee_St_Native/src/resources/js/home.js" defer></script>
 
 </body>
 

@@ -3,7 +3,7 @@
   <!-- Hero Background overlay -->
   <div class="absolute inset-0 z-10 bg-black/40"></div>
   <div class="absolute inset-0">
-    <img src="/Coffee_St/public/assets/home_head.png" alt="Coffee Shop" class="h-full w-full object-cover" />
+    <img src="/Coffee_St_Native/public/assets/home_head.png" alt="Coffee Shop" class="h-full w-full object-cover" />
   </div>
 
   <!-- Hero Content -->
@@ -25,7 +25,7 @@
           artisanal brews, crafted just for you.
         </p>
         <div class="flex flex-col gap-5 sm:flex-row">
-          <a href="/Coffee_St/public/pages/products.php"
+          <a href="/Coffee_St_Native/public/pages/products.php"
             class="font-poppins inline-flex transform items-center rounded-full bg-[#30442B] px-8 py-4 text-base font-medium tracking-wide text-white shadow-lg transition-all duration-300 hover:scale-105 hover:bg-[#3a533a]">
             View Menu
             <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 h-5 w-5" fill="none" viewBox="0 0 24 24"
@@ -33,7 +33,7 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
             </svg>
           </a>
-          <a href="/Coffee_St/public/pages/about.php"
+          <a href="/Coffee_St_Native/public/pages/about.php"
             class="font-poppins inline-flex transform items-center rounded-full border-2 border-white/20 bg-white/10 px-8 py-4 text-base font-medium tracking-wide text-white backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:bg-white/20">
             About Us
           </a>
@@ -65,7 +65,7 @@
               class="group flex h-[420px] flex-col overflow-hidden rounded-2xl shadow-lg transition-all duration-300 hover:shadow-xl">
               <div class="relative shrink-0 bg-[#30442B] pt-4 pb-8">
                 <div class="relative mx-auto h-48 w-48">
-                  <img src="/Coffee_St/public/assets/cafe_late.png" alt="Caramel Latte"
+                  <img src="/Coffee_St_Native/public/assets/cafe_late.png" alt="Caramel Latte"
                     class="h-full w-full rounded-lg object-contain transition-transform duration-500 group-hover:scale-105" />
                 </div>
               </div>
@@ -85,7 +85,7 @@
               class="group flex h-[420px] flex-col overflow-hidden rounded-2xl shadow-lg transition-all duration-300 hover:shadow-xl">
               <div class="relative shrink-0 bg-[#30442B] pt-4 pb-8">
                 <div class="relative mx-auto h-48 w-48">
-                  <img src="/Coffee_St/public/assets/cheesecake.png" alt="Blueberry Cheesecake"
+                  <img src="/Coffee_St_Native/public/assets/cheesecake.png" alt="Blueberry Cheesecake"
                     class="h-full w-full rounded-lg object-contain transition-transform duration-500 group-hover:scale-105" />
                 </div>
               </div>
@@ -105,7 +105,7 @@
               class="group flex h-[420px] flex-col overflow-hidden rounded-2xl shadow-lg transition-all duration-300 hover:shadow-xl">
               <div class="relative shrink-0 bg-[#30442B] pt-4 pb-8">
                 <div class="relative mx-auto h-48 w-48">
-                  <img src="/Coffee_St/public/assets/white_mocha.png" alt="Artisan Latte"
+                  <img src="/Coffee_St_Native/public/assets/white_mocha.png" alt="Artisan Latte"
                     class="h-full w-full rounded-lg object-contain transition-transform duration-500 group-hover:scale-105" />
                 </div>
               </div>
@@ -125,7 +125,7 @@
               class="group flex h-[420px] flex-col overflow-hidden rounded-2xl shadow-lg transition-all duration-300 hover:shadow-xl">
               <div class="relative shrink-0 bg-[#30442B] pt-4 pb-8">
                 <div class="relative mx-auto h-48 w-48">
-                  <img src="/Coffee_St/public/assets/cinammon.png" alt="Artisan Pastries"
+                  <img src="/Coffee_St_Native/public/assets/cinammon.png" alt="Artisan Pastries"
                     class="h-full w-full rounded-lg object-contain transition-transform duration-500 group-hover:scale-105" />
                 </div>
               </div>
@@ -168,7 +168,7 @@
       <!-- Left Side - Image -->
       <div class="relative h-[600px] w-full overflow-hidden md:w-1/2">
         <div class="absolute inset-0 bg-[#30442B]/10"></div>
-        <img src="/Coffee_St/public/assets/home_pastries.png" alt="Premium Coffee Experience"
+        <img src="/Coffee_St_Native/public/assets/home_pastries.png" alt="Premium Coffee Experience"
           class="h-full w-full scale-105 transform object-cover transition-transform duration-700 hover:scale-100" />
       </div>
 
@@ -183,7 +183,7 @@
             tells a story of carefully selected beans, expert roasting, and
             passionate craftsmanship. Join us in celebrating the perfect brew.
           </p>
-          <a href="/Coffee_St/public/pages/products.php"
+          <a href="/Coffee_St_Native/public/pages/products.php"
             class="group inline-flex items-center rounded-full bg-[#30442B] px-8 py-3 text-white transition-colors duration-300 hover:bg-[#405939]">
             <span class="mr-2">Explore Our Coffee and Pastries</span>
             <svg class="h-5 w-5 transform transition-transform duration-300 group-hover:translate-x-1" fill="none"
@@ -203,7 +203,7 @@
       <h2 class="mb-4 text-3xl font-bold text-[#30442B] md:text-4xl">
         Why Choose Our Coffee Shop?
       </h2>
-      <a href="/Coffee_St/public/pages/about.php#why-choose-us"
+      <a href="/Coffee_St_Native/public/pages/about.php#why-choose-us"
         class="group inline-flex items-center gap-2 text-[#30442B] transition-colors hover:text-[#967259]">
         <span class="text-lg">Learn more about us</span>
         <svg class="h-5 w-5 transform transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor"

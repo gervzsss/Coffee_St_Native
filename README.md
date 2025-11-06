@@ -1,6 +1,6 @@
-# Coffee_St Project Setup Guide
+# Coffee_St_Native Project Setup Guide
 
-Welcome to the Coffee_St project! Follow these steps to set up and run the project after cloning:
+Welcome to the Coffee_St_Native project! Follow these steps to set up and run the project after cloning:
 
 ## Prerequisites
 
@@ -11,7 +11,7 @@ Welcome to the Coffee_St project! Follow these steps to set up and run the proje
 ## 1. Clone the Repository
 
 ```sh
-git clone https://github.com/gervzsss/Coffee_St.git
+git clone https://github.com/gervzsss/Coffee_St_Native.git
 ```
 
 ## 2. Backend Setup
@@ -55,7 +55,7 @@ git clone https://github.com/gervzsss/Coffee_St.git
 ## 4. Running the Project
 
 - Place the project folder inside your XAMPP `htdocs` directory (if not already).
-- Access the site via: [http://localhost/Coffee_St/public/](http://localhost/Coffee_St/public/)
+- Access the site via: [http://localhost/Coffee_St_Native/public/](http://localhost/Coffee_St_Native/public/)
 
 ## 5. Troubleshooting
 

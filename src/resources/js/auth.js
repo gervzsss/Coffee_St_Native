@@ -261,7 +261,7 @@ $(document).ready(function () {
     `);
 
     $.ajax({
-      url: '/Coffee_St/backend/api/auth.php',
+      url: '/Coffee_St_Native/backend/api/auth.php',
       method: 'POST',
       contentType: 'application/json',
       data: JSON.stringify({ action: 'login', email, password }),
@@ -330,7 +330,7 @@ $(document).ready(function () {
     `);
 
     $.ajax({
-      url: '/Coffee_St/backend/api/auth.php',
+      url: '/Coffee_St_Native/backend/api/auth.php',
       method: 'POST',
       contentType: 'application/json',
       data: JSON.stringify({ action: 'register', ...formData }),
@@ -376,7 +376,7 @@ $(document).ready(function () {
     e.preventDefault();
 
     $.ajax({
-      url: '/Coffee_St/backend/api/auth.php',
+      url: '/Coffee_St_Native/backend/api/auth.php',
       method: 'POST',
       contentType: 'application/json',
       data: JSON.stringify({ action: 'logout' }),
@@ -387,12 +387,12 @@ $(document).ready(function () {
           showToast('Logged out successfully', { type: 'success', duration: 2000 });
 
           setTimeout(() => {
-            window.location.href = '/Coffee_St/public/index.php';
+            window.location.href = '/Coffee_St_Native/public/index.php';
           }, 1000);
         }
       },
       error: function () {
-        window.location.href = '/Coffee_St/public/index.php';
+        window.location.href = '/Coffee_St_Native/public/index.php';
       }
     });
   });
